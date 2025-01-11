@@ -1,4 +1,4 @@
-const {createPool} = require('mysql');
+const {createPool} = require('mysql2');
 const express = require('express');
 const cors = require('cors');
 const app = express();
