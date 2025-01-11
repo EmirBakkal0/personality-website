@@ -26,13 +26,20 @@ const db = createPool({
 
 
 app.get('/celebs', (req, res) => {
-    const name = req.query.name || req.body.name;  
-    db.query(`  select four_letter
-                from celebs c
-                join letter l on l.celebs_id = c.id
-                where name= '${name}'`, (err, result) => {
-        if(err) {
+    const name = req.query.name.trim()
+    if (!/^[a-zA-Z\s]+$/.test(name)) { // ONLY CHAR AND SPACE
+        return res.status(400).send({ error: "SQL INJECTION MI DENIYORSUN EVLAT" });
+      }
+    const query = `
+        SELECT four_letter
+        FROM celebs c
+        JOIN letter l ON l.celebs_id = c.id
+        WHERE name = ?
+    `;
+    db.query(query, [name], (err, result) => {
+        if (err) {
             console.log(err);
+            res.status(500).send('Internal Server Error');
         } else {
             res.json(result);
         }

@@ -16,11 +16,20 @@ function App() {
     fetch(`http://127.0.0.1:4000/celebs?name=${name}`)
       .then(response => response.json())
       .then(data => {
+        console.log(data);
+        
         setData(data)
-        setSearchResult(`Personality type of ${name} is, ${data.map((item) => item.four_letter)}`);
+        setSearchResult(`Personality type of ${name} is: ${data.length > 0 ?  data.map((item) => item.four_letter) : "Not Found in db"}`);
         
       })
-      .catch(error => console.error(error));
+      .catch(error => {
+        setSearchResult(`Personality type of ${name} is: Not Found`);
+        
+        console.error(error) 
+        console.log("Error",error);
+        
+      }
+    );
  
   };
 
