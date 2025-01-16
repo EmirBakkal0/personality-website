@@ -28,7 +28,7 @@ const db = createPool({
 app.get('/celebs', (req, res) => {
     const name = req.query.name.trim()
     if (!/^[a-zA-Z\s]+$/.test(name)) { // ONLY CHAR AND SPACE
-        return res.status(400).send({ error: "SQL INJECTION MI DENIYORSUN EVLAT" });
+        return res.status(400).send({ error: "SQL INJECTION??" });
       }
     const query = `
         SELECT four_letter
